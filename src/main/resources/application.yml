@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: mxptools
+  thymeleaf:
+    cache: false
+#    prefix: classpath:/templates/
+

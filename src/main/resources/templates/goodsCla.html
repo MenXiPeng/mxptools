@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Title</title>
+        <link rel="stylesheet" th:href="@{/bootstrap-3.4.1-dist/css/bootstrap.css}">
+        <link rel="stylesheet" th:href="@{/bootstrap-3.4.1-dist/css/bootstrap-theme.css}">
+        <script th:src="@{/bootstrap-3.4.1-dist/js/bootstrap.js}"></script>
+        <script th:src="@{/bootstrap-3.4.1-dist/js/jquery-3.7.1.min.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div style="height: 200px;margin-top: 20px">
+                <textarea type="text" style="height: 180px;width: 100%" class="form-control" name="nnn" id="nnn"
+                          placeholder="Text input"></textarea>
+            </div>
+            <row>
+                <div class="col-md-6">
+                    <textarea type="text" style="height: 700px;width: 530px" class="form-control" name="in"
+                              placeholder="Text input"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <textarea type="text" style="height: 700px;width: 530px" class="form-control" name="out"
+                              placeholder="Text input"></textarea>
+                </div>
+            </row>
+            <button type="button" class="btn btn-primary" style="margin-top: 20px" onclick="send()">Submit</button>
+        </div>
+
+    </body>
+    <script>
+
+        var textarea = $('#nnn');
+
+
+        textarea.val('yh1q,迎晖一期_迎晖1期_迎辉一期\n' +
+            'yh2q,迎晖二期_迎晖2期_迎辉二期\n' +
+            'yl1q,云岭一期_云岭1期\n' +
+            'yl2q,云岭二期_云岭2期\n' +
+            'qhdj,秦皇帝锦月_锦玥_秦皇\n' +
+            'gs1i,观山一期\n' +
+            'txaz,腾讯A座_腾讯a座_腾讯大厦A座_腾讯大厦a座_A座\n' +
+            'txbz,腾讯B座_腾讯b座_腾讯大厦B座_腾讯大厦b座_B座')
+
+        // document.getElementsByName("nnn")[0].value = 'yh1q, 迎晖一期_迎晖1期_迎辉一期\n' +
+        //     'yh2q, 迎晖二期_迎晖2期_迎辉二期\n' +
+        //     'yl1q, 云岭一期_云岭1期\n' +
+        //     'yl2q, 云岭二期_云岭2期\n' +
+        //     'qhdj, 秦皇帝锦月_锦玥_秦皇\n' +
+        //     'gs1i, 观山一期\n' +
+        //     'txaz, 腾讯A座_腾讯a座_腾讯大厦A座_腾讯大厦a座\n' +
+        //     'txbz, 腾讯B座_腾讯b座_腾讯大厦B座_腾讯大厦b座';
+
+
+        function send() {
+            var address = document.getElementsByName("nnn")[0].value
+            document.getElementsByName("out")[0].value = "";
+            var data = document.getElementsByName("in")[0].value;
+            $.ajax({
+                url: "http://localhost:8080/goods/cla",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({address: address, data: data}),
+                success: function (data) {
+                   // data = JSON.parse(data);
+                    for (const dataKey in data) {
+                        console.log(data[dataKey])
+                        if (data[dataKey] != null && data[dataKey].length > 0){
+                            document.getElementsByName("out")[0].value += dataKey + "----------\n";
+                        }
+                        data[dataKey].forEach(function (item) {
+                            document.getElementsByName("out")[0].value += item + "\n";
+                        })
+                    }
+                }
+            })
+        }
+    </script>
+</html>
