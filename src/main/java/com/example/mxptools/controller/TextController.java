@@ -18,8 +18,12 @@ public class TextController {
 
     @PostMapping("/cla")
     public Map<String, List<String>> demo(@RequestBody Map<String,String> param){
-
         return goodsClas.cla(param.get("data"), param.get("address"));
+    }
+
+    @PostMapping("/random")
+    public void random(@RequestBody Map<String,String> param){
+
     }
 
 }

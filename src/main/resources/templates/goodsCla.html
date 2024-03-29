@@ -16,7 +16,7 @@
             </div>
             <row>
                 <div class="col-md-6">
-                    <textarea type="text" style="height: 700px;width: 530px" class="form-control" name="in"
+                    <textarea type="text" style="height: 700px;width: 530px" class="form-control" name="in" id="in"
                               placeholder="Text input"></textarea>
                 </div>
                 <div class="col-md-6">
@@ -25,13 +25,16 @@
                 </div>
             </row>
             <button type="button" class="btn btn-primary" style="margin-top: 20px" onclick="send()">Submit</button>
+            <button type="button" class="btn btn-primary" style="margin-top: 20px" onclick="randomName()">Random
+            </button>
+            <button type="button" class="btn btn-primary" style="margin-top: 20px" onclick="stopRandomName()">stop
+            </button>
         </div>
 
     </body>
     <script>
 
         var textarea = $('#nnn');
-
 
         textarea.val('yh1q,迎晖一期_迎晖1期_迎辉一期\n' +
             'yh2q,迎晖二期_迎晖2期_迎辉二期\n' +
@@ -51,6 +54,31 @@
         //     'txaz, 腾讯A座_腾讯a座_腾讯大厦A座_腾讯大厦a座\n' +
         //     'txbz, 腾讯B座_腾讯b座_腾讯大厦B座_腾讯大厦b座';
 
+        var interval = null;
+            function randomName() {
+            // 延时 100 毫秒，循环
+             interval =setInterval(function () {
+                random();
+            }, 10);
+        }
+
+        function stopRandomName() {
+            clearInterval(interval);
+        }
+
+
+        function random() {
+            // 根据 n 随机选取个名字
+            var textareaIn = $('#in');
+            var n = textarea.val();
+            var names = textareaIn.val().split('\n');
+            var result = [];
+            for (var i = 0; i < n; i++) {
+                var index = Math.floor(Math.random() * names.length);
+                result.push(names[index]);
+            }
+            document.getElementsByName("out")[0].value = result.join('\n');
+        }
 
         function send() {
             var address = document.getElementsByName("nnn")[0].value
